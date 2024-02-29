@@ -18,11 +18,13 @@ long long Rand(long long l, long long h) {
 int main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
-    freopen("sinh.out", "w", stdout);
+    freopen("test_case/Test_10.inp", "w", stdout);
     srand(time(NULL));
     string lowcase = "abcdefghijklmnopqrstuvwxyz";
-    while(T--) {
-      int n = 1000000; cin >> n;
-      
+    int n = 1000000; 
+    cout << n << '\n';
+    for(int i=1; i<=n; i++) {
+      ll p = Rand(1, n);
+      cout << p << " ";
     }
 }
