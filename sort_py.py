@@ -1,15 +1,18 @@
 import time
-f = open("test_case/Test_5.inp", "r")
-n = int(f.readline())
-a = list(map(int, f.readline().split()))
-f.close()
 
-start = time.time()
-a.sort()
-end = time.time()
+g = open("test_case/sort_py.out", "w")
+for testth in range(1, 11):
+  fname = "test_case/Test_" + str(testth) + ".inp"
+  f = open(fname, "r")
+  n = int(f.readline())
+  a = list(map(int, f.readline().split()))
+  f.close()
 
-print("Sorting time: ", (end-start) * 10**3, "ms")
-for i in range(1, n):
-  if(a[i] < a[i-1]) :
-    print("Not sorted")
-    break
+  start = time.time()
+  a.sort()
+  end = time.time()
+
+  name_test = ["Test case " + str(testth) + ": " + str((end-start) * 1000) + " ms", "\n"];
+  g.writelines(name_test)
+
+g.close()

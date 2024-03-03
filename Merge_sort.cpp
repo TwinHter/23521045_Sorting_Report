@@ -1,16 +1,8 @@
 #include<iostream>
 #include<time.h>
+#include<fstream>
 using namespace std;
-
-// Calculate run time of function
-#define debug(...) fprintf(stderr, __VA_ARGS__), fflush(stderr)
-#define time__(d) \
-    for ( \
-        auto blockTime = make_pair(chrono::high_resolution_clock::now(), true); \
-        blockTime.second; \
-        debug("%s: %lld ms\n", d, chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - blockTime.first).count()), blockTime.second = false \
-    )
-// *
+using namespace std::chrono;
 
 const int SZ = 1000000 + 10;
 int a[SZ], n;
@@ -44,16 +36,22 @@ void Merge_sort(int arr[], int start=0, int end=n-1) {
   Merge(arr, start, mid, end);
 } 
 int main() {
-  freopen("test_case/Test_5.inp", "r", stdin);
-  cin >> n;
-  for(int i=0; i<n; i++) cin >> a[i];
-  time__("Merge sort") {
-    Merge_sort(a);
-  }
-  for(int i=1; i<n; i++) {
-    if(a[i] < a[i-1]) {
-      cout << "Not sorted\n";
-      return 0;
-    }
+  ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+  freopen("test_case/Merge_sort.out", "w", stdout);
+  for(int testth=1; testth<=10; testth++) {
+    string fname="test_case/Test_"+to_string(testth)+".inp";
+    //FILE *fbuff = (fname, "r", stdin);
+    ifstream fbuff(fname);
+    fbuff >> n;
+    for(int i=0; i<n; i++) fbuff >> a[i];
+    fbuff.close();
+
+    string name_case = "Test case " + to_string(testth);
+    auto start = high_resolution_clock::now();
+      Merge_sort(a);
+    auto end = high_resolution_clock::now();
+
+    auto duration = duration_cast<microseconds>(end - start);
+    cout << name_case << ": " << (long double)duration.count() / 1000 << " ms" << endl;
   }
 }

@@ -1,2 +1,4 @@
 function for my compile time of code get from codeforces.com
 My code get hint from Geeksforgeeks
+
++Quick_sort: pivot of subarray[start...end] is the middle id of subarray. (if the pivot is the first element or last element, time complexity will be O(N^2))

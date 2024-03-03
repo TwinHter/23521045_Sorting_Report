@@ -1,20 +1,12 @@
 #include<iostream>
 #include<time.h>
+#include<fstream>
 using namespace std;
-
-// Calculate run time of function
-#define debug(...) fprintf(stderr, __VA_ARGS__), fflush(stderr)
-#define time__(d) \
-    for ( \
-        auto blockTime = make_pair(chrono::high_resolution_clock::now(), true); \
-        blockTime.second; \
-        debug("%s: %lld ms\n", d, chrono::duration_cast<chrono::milliseconds>(chrono::high_resolution_clock::now() - blockTime.first).count()), blockTime.second = false \
-    )
-// *
-
+using namespace std::chrono;
 const int SZ = 1000000 + 10;
-int a[SZ], n;
+int a[SZ], n, step;
 int partition(int start, int end) {
+  swap(a[start], a[start+(end-start)/2]);
   int pval = a[start], cnt = 0;
   for(int i=start+1; i<=end; i++) {
     if(a[i] <= pval) cnt++;
@@ -39,17 +31,22 @@ void Quick_sort(int start = 0, int end = n-1) {
   Quick_sort(p+1, end);
 }
 int main() {
-  freopen("test_case/Test_5.inp", "r", stdin);
-  cin >> n;
-  for(int i=0; i<n; i++) cin >> a[i];
+  ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+  freopen("test_case/Quick_sort.out", "w", stdout);
+  for(int testth=1; testth<=10; testth++) {
+    string fname="test_case/Test_"+to_string(testth)+".inp";
+    //FILE *fbuff = (fname, "r", stdin);
+    ifstream fbuff(fname);
+    fbuff >> n;
+    for(int i=0; i<n; i++) fbuff >> a[i];
+    fbuff.close();
 
-  time__("Quick sort") {
-    Quick_sort();
-  }
-  for(int i=1; i<n; i++) {
-    if(a[i] < a[i-1]) {
-      cout << "Not sorted\n";
-      return 0;
-    }
+    string name_case = "Test case " + to_string(testth);
+    auto start = high_resolution_clock::now();
+      Quick_sort();
+    auto end = high_resolution_clock::now();
+
+    auto duration = duration_cast<microseconds>(end - start);
+    cout << name_case << ": " << (long double)duration.count() / 1000 << " ms" << endl;
   }
 }
