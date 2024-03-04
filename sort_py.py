@@ -13,6 +13,7 @@ for testth in range(1, 11):
   end = time.time()
 
   name_test = ["Test case " + str(testth) + ": " + str((end-start) * 1000) + " ms", "\n"];
+  # name_test = [str((end - start)*1000), "\n"]
   g.writelines(name_test)
 
 g.close()

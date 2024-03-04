@@ -25,6 +25,7 @@ int main() {
     auto end = high_resolution_clock::now();
 
     auto duration = duration_cast<microseconds>(end - start);
-    cout << name_case << ": " << (long double)duration.count() / 1000 << " ms" << endl;
+    cout << name_case << ": ";
+    cout << (long double)duration.count() / 1000 << " ms" << endl;
   }
 }
